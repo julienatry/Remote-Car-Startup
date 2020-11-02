@@ -8,6 +8,5 @@ Make your car start by pressing a button on your phone
 - Bluetooth module
 
 # Todo list
-- Bluetooth reading
 - Android app
 - Engine startup sequence
