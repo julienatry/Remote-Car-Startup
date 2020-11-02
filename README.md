@@ -1,3 +1,13 @@
 # Remote-Car-Startup
 
-this code is to start your car with your phone
+Make your car start by pressing a button on your phone
+
+# Requirements
+- Programmable IC
+- Relays
+- Bluetooth module
+
+# Todo list
+- Bluetooth reading
+- Android app
+- Engine startup sequence
