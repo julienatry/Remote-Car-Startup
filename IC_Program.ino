@@ -5,7 +5,7 @@ int ignitionPin = 9;
 int starterPin = 10;
 String receivedData;
 
-SoftwareSerial BTSerial(2, 3); // RX, TX pins for BT module
+SoftwareSerial BTSerial(2, 3); 											// RX, TX pins for BT module
 
 void setup() {
   pinMode(warningLightsPin, OUTPUT);
@@ -26,6 +26,6 @@ void loop() {
 	if (receivedData == "StartupSequence")
 	{
 		Serial.print("Starting vehicle");
-		receivedData = ""; // Reset
+		receivedData = ""; 												// Reset
 	}
 }
