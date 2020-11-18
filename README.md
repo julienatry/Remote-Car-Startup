@@ -9,9 +9,9 @@ Make your car start by pressing a button on your phone
 
 # WIP
 - µC base program
+- Engine startup sequence
 
 # Todo list
 - µC program
 - Android app
-- Engine startup sequence
 - Custom horn integration

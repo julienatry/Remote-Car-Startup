@@ -3,7 +3,10 @@
 int warningLightsPin = 8;
 int ignitionPin = 9;
 int starterPin = 10;
+int angelEyesPin = 11;
+int areAngelEyesON = 0;
 String receivedData;
+char* state = "500";
 
 SoftwareSerial BTSerial(2, 3); 											// RX, TX pins for BT module
 
@@ -11,13 +14,15 @@ void setup() {
   pinMode(warningLightsPin, OUTPUT);
   pinMode(ignitionPin, OUTPUT);
   pinMode(starterPin, OUTPUT);
-  pinMode(13, OUTPUT);
+  pinMode(angelEyesPin, OUTPUT);
 
   Serial.begin(9600);
   BTSerial.begin(9600);
 }
 
 void loop() {
+	receivedData = ""; 													// Reset
+
 	if (BTSerial.available())
 	{
 		receivedData = BTSerial.readString();
@@ -26,6 +31,36 @@ void loop() {
 	if (receivedData == "StartupSequence")
 	{
 		Serial.print("Starting vehicle");
-		receivedData = ""; 												// Reset
+		startEngine();
+	}else if (receivedData == "AngelEyesON")
+	{
+		Serial.print("Turning AngelEyes ON");
+		angelEyes("ON");
+	}else if (receivedData == "AngelEyesOFF")
+	{
+		Serial.print("Turning AngelEyes OFF");
+		angelEyes("OFF");
+	}else if (receivedData == "AreAngelEyesON")
+	{
+		BTSerial.write(angelEyes("state"));								//Send 501 if AngelEyes ON or 500 if OFF
 	}
+}
+
+char* angelEyes(String action) {
+	if (action == "state")
+	{
+		return state;
+	}else if (action == "ON")
+	{
+		digitalWrite(angelEyesPin, HIGH);
+		state = "501";
+	}else if (action == "OFF")
+	{
+		digitalWrite(angelEyesPin, LOW);
+		state = "500";
+	}
+}
+
+void startEngine() {
+	digitalWrite(ignitionPin, HIGH);									//Turn ON ignition
 }
