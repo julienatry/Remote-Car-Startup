@@ -4,6 +4,7 @@ int warningLightsPin = 8;
 int ignitionPin = 9;
 int starterPin = 10;
 int angelEyesPin = 11;
+int hornPin = 12;
 int areAngelEyesON = 0;
 String receivedData;
 char* state = "500";
@@ -15,6 +16,7 @@ void setup() {
   pinMode(ignitionPin, OUTPUT);
   pinMode(starterPin, OUTPUT);
   pinMode(angelEyesPin, OUTPUT);
+  pinMode(hornPin, OUTPUT);
 
   Serial.begin(9600);
   BTSerial.begin(9600);
@@ -62,5 +64,16 @@ char* angelEyes(String action) {
 }
 
 void startEngine() {
+	warningLights();
 	digitalWrite(ignitionPin, HIGH);									//Turn ON ignition
+	delay(10000);
+	digitalWrite(starterPin, HIGH);										//Turn ON starter for sec
+	delay(5000);
+	digitalWrite(starterPin, LOW);
+}
+
+void warningLights() {
+	digitalWrite(warningLightsPin, HIGH);
+	delay(2000);
+	digitalWrite(warningLightsPin, LOW);
 }
