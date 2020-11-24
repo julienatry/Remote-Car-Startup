@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <SoftwareSerial.h>
 #include "Adafruit_Soundboard.h"
 
@@ -54,17 +55,17 @@ void loop() {
 	}else if (receivedData == "EngineOff")
 	{
 		digitalWrite(ignitionPin, LOW);
-	}else if (receivedData >= 800 && receivedData <= 811)
-	{
-		hornTrack = receivedData - 800;
-		initHorn();
-		playHorn(hornTrack);
 	}else if (receivedData == "LockCar")
 	{
 		lockCar();
 	}else if (receivedData == "UnlockCar")
 	{
 		unlockCar();
+	}else{
+		hornTrack = atoi(receivedData);
+		Serial.println(hornTrack);
+		initHorn();
+		playHorn(hornTrack);
 	}
 }
 
@@ -82,6 +83,8 @@ char* angelEyes(String action) {
 	{
 		digitalWrite(angelEyesPin, LOW);
 		angelEyesState = "500";
+	}else{
+		Serial.println("angelEyes : string error");
 	}
 }
 
@@ -140,7 +143,7 @@ void initHorn() {
 	delay(2000);
 	HornSerial.begin(9600);
 
-	if (!sfx.reset())
+	if (!horn.reset())
 	{
 		Serial.println("initHorn : Reset failed");
 	}
@@ -148,7 +151,7 @@ void initHorn() {
 
 void playHorn(int track) {																													//Play selected track on custom horn
 	Serial.print("Playing track "); Serial.println(track);
-	if (!sfx.playTrack(track))
+	if (!horn.playTrack(track))
 	{
 		Serial.println("playHorn : Failed to play track");
 	}
