@@ -2,16 +2,17 @@
 
 Make your car start by pressing a button on your phone
 
+
 # Requirements
-- Programmable IC
+- Programmable µC
 - Relays
 - Bluetooth module
 
 # WIP
-- µC base program
-- Engine startup sequence
+- µC program
 
 # Todo list
-- µC program
 - Android app
-- Custom horn integration
+- Wiring to BMW's ZKE
+- Custom wire harness for angel eyes
+- Custom PCB
