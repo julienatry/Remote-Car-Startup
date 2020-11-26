@@ -63,7 +63,7 @@ void loop() {
 		carLock("unlock");
 	}else if (receivedData == "LockState")
 	{
-		BTSerial.write(carLock("state"));																	//Send 601 if tha car is locked ON or 600 if the car is unlocked
+		BTSerial.write(carLock("state"));																	//Send 601 if the car is locked or 600 if the car is unlocked
 	}else{
 		hornTrack = atoi(receivedData);
 		Serial.println(hornTrack);
