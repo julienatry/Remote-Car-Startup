@@ -4,14 +4,14 @@
 
 int hornResetPin = 6, hornUGPin = 7;
 int warningLightsPin = 8, ignitionPin = 9, starterPin = 10;
-int angelEyesPin = 11, lockPin = 12, unlockPin = 13;																						//Pins
+int angelEyesPin = 11, lockPin = 12, unlockPin = 13;														//Pins
 
 String receivedData;
-char* angelEyesState = "500";
+char* angelEyesState = "500", lockState = "600";
 int hornTrack;
 
-SoftwareSerial BTSerial(2, 3); 																												//RX, TX pins for BT module
-SoftwareSerial HornSerial(4, 5);																											//RX, TX pins for custom horn
+SoftwareSerial BTSerial(2, 3); 																				//RX, TX pins for BT module
+SoftwareSerial HornSerial(4, 5);																			//RX, TX pins for custom horn
 
 Adafruit_Soundboard horn(&HornSerial, NULL, hornResetPin);
 
@@ -29,7 +29,7 @@ void setup() {
 }
 
 void loop() {
-	receivedData = ""; 																														//Reset
+	receivedData = ""; 																						//Reset
 
 	if (BTSerial.available())
 	{
@@ -51,16 +51,19 @@ void loop() {
 		angelEyes("OFF");
 	}else if (receivedData == "AngelEyesState")
 	{
-		BTSerial.write(angelEyes("state"));																									//Send 501 if AngelEyes ON or 500 if OFF
+		BTSerial.write(angelEyes("state"));																	//Send 501 if AngelEyes ON or 500 if OFF
 	}else if (receivedData == "EngineOff")
 	{
 		digitalWrite(ignitionPin, LOW);
 	}else if (receivedData == "LockCar")
 	{
-		lockCar();
+		carLock("lock");
 	}else if (receivedData == "UnlockCar")
 	{
-		unlockCar();
+		carLock("unlock");
+	}else if (receivedData == "LockState")
+	{
+		BTSerial.write(carLock("state"));																	//Send 601 if tha car is locked ON or 600 if the car is unlocked
 	}else{
 		hornTrack = atoi(receivedData);
 		Serial.println(hornTrack);
@@ -91,9 +94,9 @@ char* angelEyes(String action) {
 
 
 void startEngine() {
-	digitalWrite(ignitionPin, HIGH);																										//Turn ON ignition
+	digitalWrite(ignitionPin, HIGH);																		//Turn ON ignition
 	delay(10000);
-	digitalWrite(starterPin, HIGH);																											//Turn ON starter for 5 sec
+	digitalWrite(starterPin, HIGH);																			//Turn ON starter for 5 sec
 	delay(5000);
 	digitalWrite(starterPin, LOW);
 }
@@ -122,18 +125,27 @@ void warningLights(String act) {
 
 
 
-void lockCar() {
-	warningLights("lock");
-	digitalWrite(lockPin, HIGH);
-	delay(200);
-	digitalWrite(lockPin, LOW);
-}
-
-void unlockCar() {
-	warningLights("unlock");
-	digitalWrite(unlockPin, HIGH);
-	delay(200);
-	digitalWrite(unlockPin, LOW);
+char* carLock(String action) {
+	if (action == "state")
+	{
+		return lockState;
+	}else if (action == "lock")
+	{
+		warningLights("lock");
+		digitalWrite(lockPin, HIGH);
+		delay(200);
+		digitalWrite(lockPin, LOW);
+		lockState = "601";
+	}else if (action == "unlock")
+	{
+		warningLights("unlock");
+		digitalWrite(unlockPin, HIGH);
+		delay(200);
+		digitalWrite(unlockPin, LOW);
+		lockState = "600";
+	}else{
+		Serial.println("carLock : string error");
+	}
 }
 
 
@@ -149,7 +161,7 @@ void initHorn() {
 	}
 }
 
-void playHorn(int track) {																													//Play selected track on custom horn
+void playHorn(int track) {																					//Play selected track on custom horn
 	Serial.print("Playing track "); Serial.println(track);
 	if (!horn.playTrack(track))
 	{
