@@ -135,14 +135,14 @@ char* carLock(String action) {
 		digitalWrite(lockPin, HIGH);
 		delay(200);
 		digitalWrite(lockPin, LOW);
-		lockState = "601";
+		lockState = "600";
 	}else if (action == "unlock")
 	{
 		warningLights("unlock");
 		digitalWrite(unlockPin, HIGH);
 		delay(200);
 		digitalWrite(unlockPin, LOW);
-		lockState = "600";
+		lockState = "601";
 	}else{
 		Serial.println("carLock : string error");
 	}
