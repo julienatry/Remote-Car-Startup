@@ -39,7 +39,7 @@ void loop() {
 	if (receivedData == "StartupSequence")
 	{
 		Serial.println("Starting vehicle");
-		unlockCar();
+		carLock("unlock");
 		startEngine();
 	}else if (receivedData == "AngelEyesOn")
 	{
