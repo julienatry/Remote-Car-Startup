@@ -41,15 +41,15 @@ void loop() {
 		Serial.println("Starting vehicle");
 		unlockCar();
 		startEngine();
-	}else if (receivedData == "AngelEyesON")
+	}else if (receivedData == "AngelEyesOn")
 	{
 		Serial.println("Turning AngelEyes ON");
 		angelEyes("ON");
-	}else if (receivedData == "AngelEyesOFF")
+	}else if (receivedData == "AngelEyesOff")
 	{
 		Serial.println("Turning AngelEyes OFF");
 		angelEyes("OFF");
-	}else if (receivedData == "AreAngelEyesON")
+	}else if (receivedData == "AngelEyesState")
 	{
 		BTSerial.write(angelEyes("state"));																									//Send 501 if AngelEyes ON or 500 if OFF
 	}else if (receivedData == "EngineOff")
