@@ -8,6 +8,7 @@ int angelEyesPin = 11, lockPin = 12, unlockPin = 13;														//Pins
 
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
+char currentChar;
 int hornTrack;
 
 SoftwareSerial BTSerial(2, 3); 																				//RX, TX pins for BT module
@@ -29,11 +30,17 @@ void setup() {
 }
 
 void loop() {
-	receivedData = ""; 																						//Reset
-
 	if (BTSerial.available())
 	{
-		receivedData = BTSerial.readString();
+		currentChar = BTSerial.read();
+		receivedData = receivedData + currentChar;
+
+		if (currentChar == '\n')
+		{
+			receivedData = receivedData.substring(0, receivedData.length() - 1);
+			Serial.println(receivedData);
+			receivedData = "";
+		}
 	}
 
 	if (receivedData == "StartupSequence")
@@ -51,25 +58,30 @@ void loop() {
 		angelEyes("OFF");
 	}else if (receivedData == "AngelEyesState")
 	{
+		Serial.println("Sending Angel Eyes State");
 		BTSerial.write(angelEyes("state"));																	//Send 501 if AngelEyes ON or 500 if OFF
 	}else if (receivedData == "EngineOff")
 	{
+		Serial.println("Stoping Engine");
 		digitalWrite(ignitionPin, LOW);
 	}else if (receivedData == "LockCar")
 	{
+		Serial.println("Locking car");
 		carLock("lock");
 	}else if (receivedData == "UnlockCar")
 	{
+		Serial.println("Unlocking car");
 		carLock("unlock");
 	}else if (receivedData == "LockState")
 	{
+		Serial.println("Sending Car Lock State");
 		BTSerial.write(carLock("state"));																	//Send 601 if the car is locked or 600 if the car is unlocked
-	}else{
+	}/*else{
 		hornTrack = atoi(receivedData);
 		Serial.println(hornTrack);
 		initHorn();
 		playHorn(hornTrack);
-	}
+	}*/
 }
 
 
