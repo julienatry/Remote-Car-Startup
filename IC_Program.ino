@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <SoftwareSerial.h>
 
+int batteryVoltage = A5;
 int warningLightsPin = 8, ignitionPin = 9, starterPin = 10;
 int angelEyesPin = 11, lockPin = 12, unlockPin = 13;														//Pins
-
+float Vout = 0.00, Vin = 0.00, R1 = 100000.00, R2 = 10000.00;
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
