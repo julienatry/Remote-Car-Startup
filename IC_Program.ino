@@ -1,27 +1,20 @@
 #include <stdlib.h>
 #include <SoftwareSerial.h>
-#include "Adafruit_Soundboard.h"
 
-int hornResetPin = 6, hornUGPin = 7;
 int warningLightsPin = 8, ignitionPin = 9, starterPin = 10;
 int angelEyesPin = 11, lockPin = 12, unlockPin = 13;														//Pins
 
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
-int hornTrack;
 
 SoftwareSerial BTSerial(2, 3); 																				//RX, TX pins for BT module
-SoftwareSerial HornSerial(4, 5);																			//RX, TX pins for custom horn
-
-Adafruit_Soundboard horn(&HornSerial, NULL, hornResetPin);
 
 void setup() {
   pinMode(warningLightsPin, OUTPUT);
   pinMode(ignitionPin, OUTPUT);
   pinMode(starterPin, OUTPUT);
   pinMode(angelEyesPin, OUTPUT);
-  pinMode(hornUGPin, OUTPUT);
   pinMode(lockPin, OUTPUT);
   pinMode(unlockPin, OUTPUT);
 
@@ -76,12 +69,7 @@ void loop() {
 	{
 		Serial.println("Sending Car Lock State");
 		BTSerial.write(carLock("state"));																	//Send 601 if the car is locked or 600 if the car is unlocked
-	}/*else{
-		hornTrack = atoi(receivedData);
-		Serial.println(hornTrack);
-		initHorn();
-		playHorn(hornTrack);
-	}*/
+	}
 }
 
 
@@ -157,26 +145,5 @@ char* carLock(String action) {
 		lockState = "601";
 	}else{
 		Serial.println("carLock : string error");
-	}
-}
-
-
-
-void initHorn() {
-	digitalWrite(hornUGPin, HIGH);
-	delay(2000);
-	HornSerial.begin(9600);
-
-	if (!horn.reset())
-	{
-		Serial.println("initHorn : Reset failed");
-	}
-}
-
-void playHorn(int track) {																					//Play selected track on custom horn
-	Serial.print("Playing track "); Serial.println(track);
-	if (!horn.playTrack(track))
-	{
-		Serial.println("playHorn : Failed to play track");
 	}
 }
