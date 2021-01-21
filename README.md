@@ -3,10 +3,10 @@
 Make your car start by pressing a button on your phone
 
 
-# Requirements
+# Components used
 - Programmable µC
-- Relays
-- Bluetooth module
+- Relays (SRD-05VDC-SL-C)
+- Bluetooth module (HC-05)
 
 # WIP
 - µC program
@@ -14,3 +14,4 @@ Make your car start by pressing a button on your phone
 # Todo list
 - Wiring to BMW's ZKE
 - Custom PCB
+- Voltmeter function
