@@ -14,4 +14,4 @@ Make your car start by pressing a button on your phone
 # Todo list
 - Wiring to BMW's ZKE
 - Custom PCB
-- Voltmeter function
+- Battery monitoring
