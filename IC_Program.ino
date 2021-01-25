@@ -1,13 +1,16 @@
 #include <stdlib.h>
 #include <SoftwareSerial.h>
 
-int batteryVoltage = A5;
+int batteryVoltagePin = A5, val = 0;
 int warningLightsPin = 8, ignitionPin = 9, starterPin = 10;
 int angelEyesPin = 11, lockPin = 12, unlockPin = 13;														//Pins
-float Vout = 0.00, Vin = 0.00, R1 = 100000.00, R2 = 10000.00;
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
+
+float voltageBattery = 0.00;
+float R1 = 100000.00;                                                 // resistance of R1 (100K) 
+float R2 = 10000.00;                                                  // resistance of R2 (10K) 
 
 SoftwareSerial BTSerial(2, 3); 																				//RX, TX pins for BT module
 
@@ -18,6 +21,7 @@ void setup() {
   pinMode(angelEyesPin, OUTPUT);
   pinMode(lockPin, OUTPUT);
   pinMode(unlockPin, OUTPUT);
+  pinMode(batteryVoltagePin, INPUT);
 
   Serial.begin(9600);
   BTSerial.begin(9600);
@@ -70,7 +74,12 @@ void loop() {
 	{
 		Serial.println("Sending Car Lock State");
 		BTSerial.write(carLock("state"));																	//Send 601 if the car is locked or 600 if the car is unlocked
-	}
+	}else if (receivedData == "BatteryVoltage")
+  {
+    Serial.println("Sending battery voltage");
+    BTSerial.print(batteryVoltage());
+    BTSerial.println("V");
+  }
 }
 
 
@@ -147,4 +156,12 @@ char* carLock(String action) {
 	}else{
 		Serial.println("carLock : string error");
 	}
+}
+
+float batteryVoltage() {
+  val = analogRead(batteryVoltagePin);
+  val = (val * 5.00) / 1024.00;
+  voltageBattery = val / (R2/(R1+R2));
+  Serial.println(voltageBattery);
+  return voltageBattery;
 }
