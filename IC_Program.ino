@@ -8,6 +8,7 @@ String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
 
+float calc = 0.00;
 float voltageBattery = 0.00;
 float R1 = 100000.00;                                                 // resistance of R1 (100K) 
 float R2 = 10000.00;                                                  // resistance of R2 (10K) 
@@ -160,8 +161,8 @@ char* carLock(String action) {
 
 float batteryVoltage() {
   val = analogRead(batteryVoltagePin);
-  val = (val * 5.00) / 1024.00;
-  voltageBattery = val / (R2/(R1+R2));
+  calc = (val * 5.00) / 1024.00;
+  voltageBattery = calc / (R2/(R1+R2));
   Serial.println(voltageBattery);
   return voltageBattery;
 }
