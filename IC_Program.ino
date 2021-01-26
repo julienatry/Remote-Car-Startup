@@ -77,9 +77,9 @@ void loop() {
 		BTSerial.write(carLock("state"));																	//Send 601 if the car is locked or 600 if the car is unlocked
 	}else if (receivedData == "BatteryVoltage")
 	{
-    Serial.println("Sending battery voltage");
-    BTSerial.print(batteryVoltage());
-    BTSerial.println("V");
+		Serial.println("Sending battery voltage");
+		BTSerial.print(batteryVoltage());
+		BTSerial.println("V");
   }
 }
 
