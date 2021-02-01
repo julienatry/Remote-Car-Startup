@@ -10,8 +10,8 @@ char currentChar;
 
 float calc = 0.00;
 float voltageBattery = 0.00;
-float R1 = 100000.00;                                                 // resistance of R1 (100K) 
-float R2 = 10000.00;                                                  // resistance of R2 (10K) 
+float R1 = 1011000.00;                                                 // resistance of R1 (100K) 
+float R2 = 474000.00;                                                  // resistance of R2 (10K) 
 
 int i = 0;
 
@@ -168,7 +168,7 @@ char* carLock(String action) {
 
 float batteryVoltage() {
   val = analogRead(batteryVoltagePin);
-  calc = (val * 5.00) / 1024.00;
+  calc = (val * 4.92) / 1024.00;
   voltageBattery = calc / (R2/(R1+R2));
   Serial.println(voltageBattery);
   return voltageBattery;
