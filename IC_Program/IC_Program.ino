@@ -3,19 +3,19 @@
 
 int batteryVoltagePin = A5, val = 0;
 int warningLightsPin = 8, ignitionPin = 9, starterPin = 10;
-int angelEyesPin = 11, lockPin = 12, unlockPin = 13;                            //Pins
+int angelEyesPin = 11, lockPin = 12, unlockPin = 13;
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
 
 float calc = 0.00;
 float voltageBattery = 0.00;
-float R1 = 1011000.00;                                                 // resistance of R1 (100K) 
-float R2 = 474000.00;                                                  // resistance of R2 (10K) 
+float R1 = 1011000.00;
+float R2 = 474000.00;
 
 int i = 0;
 
-SoftwareSerial BTSerial(2, 3);                                        //RX, TX pins for BT module
+SoftwareSerial BTSerial(2, 3);
 
 void setup() {
   pinMode(warningLightsPin, OUTPUT);
@@ -60,7 +60,7 @@ void loop() {
   }else if (receivedData == "AngelEyesState")
   {
     Serial.println("Sending Angel Eyes State");
-    BTSerial.write(angelEyes("state"));                                 //Send 501 if AngelEyes ON or 500 if OFF
+    BTSerial.write(angelEyes("state"));
   }else if (receivedData == "EngineOff")
   {
     Serial.println("Stoping Engine");
@@ -76,7 +76,7 @@ void loop() {
   }else if (receivedData == "LockState")
   {
     Serial.println("Sending Car Lock State");
-    BTSerial.write(carLock("state"));                                 //Send 601 if the car is locked or 600 if the car is unlocked
+    BTSerial.write(carLock("state"));
   }
   
   
@@ -112,9 +112,9 @@ char* angelEyes(String action) {
 
 
 void startEngine() {
-  digitalWrite(ignitionPin, HIGH);                                    //Turn ON ignition
+  digitalWrite(ignitionPin, HIGH);
   delay(10000);
-  digitalWrite(starterPin, HIGH);                                     //Turn ON starter for 5 sec
+  digitalWrite(starterPin, HIGH);
   delay(5000);
   digitalWrite(starterPin, LOW);
 }
