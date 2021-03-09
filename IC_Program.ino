@@ -168,7 +168,7 @@ char* carLock(String action) {
 
 float batteryVoltage() {
   val = analogRead(batteryVoltagePin);
-  calc = (val * 4.92) / 1024.00;
+  calc = (val * 5.00) / 1024.00;
   voltageBattery = calc / (R2/(R1+R2));
   Serial.println(voltageBattery);
   return voltageBattery;
