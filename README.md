@@ -12,7 +12,7 @@ Make your car start by pressing a button on your phone
 - 16MHz Quartz Crystal
 
 # WIP
-- Custom PCB
+- Car integration
 
 # Todo list
-- Wiring to BMW's ZKE
+- Wiring to BMW's ZKE / Stock harness
