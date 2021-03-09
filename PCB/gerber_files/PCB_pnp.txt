@@ -1,0 +1,65 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=PCB
+*Date=00:05:50
+*CreatedBy=Fritzing 0.9.5d.2020-02-07.CD-548-0-3d61c58
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;8.39797;-110.973;0;Bottom;Via11
+2;;;20.6754;-115.064;90;Bottom;Warning Lights Relay
+3;;TO92 [THT];47.3368;-47.0222;-90;Bottom;Lock NPN
+4;0.33µF;100 mil [THT, multilayer];80.6233;-20.4727;0;Bottom;12V in cap
+5;;;92.5719;-125.506;0;Bottom;TXT3
+6;;TO92 [THT];47.3368;-96.5522;-90;Bottom;Ignition NPN
+7;;;8.39797;-52.9726;0;Bottom;Via6
+8;10µF;100 mil [THT, multilayer];83.1232;-31.9727;0;Bottom;5V out cap
+9;1k;THT;61.2179;-47.2127;0;Bottom;Lock Res
+10;;;8.39797;-44.9728;0;Bottom;Via5
+11;;TO92 [THT];47.3368;-63.5322;-90;Bottom;AngelEyes NPN
+12;1k;THT;61.2179;-80.2327;0;Bottom;Starter Res
+13;;THT;103.397;-57.427;90;Bottom;XTAL1
+14;;dip;82.8079;-52.2927;180;Bottom;U1
+15;;;8.39797;-36.4725;0;Bottom;Via4
+16;;;8.39797;-102.473;0;Bottom;Via14
+17;;300 mil [THT];37.0879;-114.548;90;Bottom;Warning Lights Diode
+18;;300 mil [THT];37.0879;-81.5281;90;Bottom;Starter Diode
+19;;300 mil [THT];37.0879;-65.0181;90;Bottom;AngelEyes Diode
+20;;300 mil [THT];37.0879;-31.9981;90;Bottom;Unlock Diode
+21;;TO92 [THT];47.3368;-80.0422;-90;Bottom;Starter NPN
+22;;;8.39797;-85.9727;0;Bottom;Via8
+23;100k;THT;71.8981;-22.3926;90;Bottom;R3
+24;;300 mil [THT];37.0879;-48.5081;90;Bottom;Lock Diode
+25;;;8.39797;-28.4726;0;Bottom;Via3
+26;1k;THT;61.2179;-96.7427;0;Bottom;Ignition Res
+27;;;12.8891;-2.1906;0;Bottom;TXT1
+28;;;8.39797;-94.4726;0;Bottom;Via13
+29;;TO92 [THT];47.3368;-113.062;-90;Bottom;Warning Lights NPN
+30;5V;TO220 [THT];81.858;-27.9967;0;Bottom;U2
+31;;;20.6754;-32.5142;90;Bottom;Unlock Relay
+32;22pF;100 mil [THT, multilayer];97.398;-59.6979;-90;Bottom;CLK cap2
+33;;300 mil [THT];37.0879;-98.0381;90;Bottom;Ignition Diode
+34;;;8.39797;-77.9728;0;Bottom;Via7
+35;;;8.39797;-69.4725;0;Bottom;Via10
+36;1k;THT;61.2179;-30.7027;0;Bottom;Unlock Res
+37;22pF;100 mil [THT, multilayer];97.398;-54.698;-90;Bottom;CLK cap1
+38;;;118.353;-42.2427;180;Bottom;Composant1
+39;;;8.39797;-118.973;0;Bottom;Via12
+40;;TO92 [THT];47.3368;-30.5122;-90;Bottom;Unlock NPN
+41;;;75.3981;-9.4726;0;Bottom;Via1
+42;;;20.6754;-49.0242;90;Bottom;Lock Relay
+43;;;85.8979;-9.4726;0;Bottom;Via2
+44;1k;THT;61.2179;-113.253;0;Bottom;Warning Lights Res
+45;1k;THT;61.2179;-63.7227;0;Bottom;AngelEyes Res
+46;10k;THT;68.398;-22.5526;90;Bottom;R2
+47;;;20.6754;-65.5342;90;Bottom;AngelEyes Relay
+48;;;20.6754;-82.0442;90;Bottom;Starter Relay
+49;;;20.6754;-98.5542;90;Bottom;Ignition Relay
+50;;;8.39797;-61.4726;0;Bottom;Via9
