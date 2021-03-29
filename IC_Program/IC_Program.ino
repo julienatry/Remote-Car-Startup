@@ -10,8 +10,8 @@ char currentChar;
 
 float calc = 0.00;
 float voltageBattery = 0.00;
-float R1 = 1011000.00;
-float R2 = 474000.00;
+float R1 = 102000.00;
+float R2 = 9999.00;
 
 int i = 0;
 
@@ -28,6 +28,8 @@ void setup() {
 
   Serial.begin(9600);
   BTSerial.begin(9600);
+
+  digitalWrite(warningLightsPin, HIGH);
 }
 
 void loop() {
@@ -168,7 +170,7 @@ char* carLock(String action) {
 
 float batteryVoltage() {
   val = analogRead(batteryVoltagePin);
-  calc = (val * 5.00) / 1024.00;
+  calc = (val * 5.05) / 1024.00;
   voltageBattery = calc / (R2/(R1+R2));
   Serial.println(voltageBattery);
   return voltageBattery;
