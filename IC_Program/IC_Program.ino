@@ -2,7 +2,7 @@
 #include <SoftwareSerial.h>
 
 int batteryVoltagePin = A5, val = 0;
-int warningLightsPin = 8, ignitionPin = 9, starterPin = 10;
+int accessoriesPin = 8, ignitionPin = 9, starterPin = 10;
 int angelEyesPin = 11, lockPin = 12, unlockPin = 13;
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
@@ -18,7 +18,7 @@ int i = 0;
 SoftwareSerial BTSerial(2, 3);
 
 void setup() {
-  pinMode(warningLightsPin, OUTPUT);
+  pinMode(accessoriesPin, OUTPUT);
   pinMode(ignitionPin, OUTPUT);
   pinMode(starterPin, OUTPUT);
   pinMode(angelEyesPin, OUTPUT);
@@ -50,6 +50,7 @@ void loop() {
   {
     Serial.println("Starting vehicle");
     carLock("unlock");
+    delay(2000);
     startEngine();
   }else if (receivedData == "AngelEyesOn")
   {
@@ -67,6 +68,7 @@ void loop() {
   {
     Serial.println("Stoping Engine");
     digitalWrite(ignitionPin, LOW);
+    digitalWrite(accessoriesPin, LOW);
   }else if (receivedData == "LockCar")
   {
     Serial.println("Locking car");
@@ -114,6 +116,7 @@ char* angelEyes(String action) {
 
 
 void startEngine() {
+  digitalWrite(accessoriesPin, HIGH);
   digitalWrite(ignitionPin, HIGH);
   delay(10000);
   digitalWrite(starterPin, HIGH);
@@ -123,7 +126,7 @@ void startEngine() {
 
 
 
-void warningLights(String act) {
+/*void warningLights(String act) {
   if (act == "lock")
   {
     digitalWrite(warningLightsPin, HIGH);
@@ -141,7 +144,7 @@ void warningLights(String act) {
   }else{
     Serial.println("warningLights : string error");
   }
-}
+}*/
 
 
 
@@ -151,14 +154,14 @@ char* carLock(String action) {
     return lockState;
   }else if (action == "lock")
   {
-    warningLights("lock");
+    //warningLights("lock");
     digitalWrite(lockPin, HIGH);
     delay(200);
     digitalWrite(lockPin, LOW);
     lockState = "600";
   }else if (action == "unlock")
   {
-    warningLights("unlock");
+    //warningLights("unlock");
     digitalWrite(unlockPin, HIGH);
     delay(200);
     digitalWrite(unlockPin, LOW);

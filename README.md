@@ -12,6 +12,7 @@ Make your car start by pressing a button on your phone
 - 16MHz Quartz Crystal
 
 # WIP
+- IC Program
 - Car integration
 
 # Todo list
