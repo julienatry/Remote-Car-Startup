@@ -17,3 +17,4 @@ Make your car start by pressing a button on your phone
 
 # Todo list
 - Wiring to BMW's ZKE / Stock harness
+- Signal from the ECU when engine started up
