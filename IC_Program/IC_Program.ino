@@ -161,4 +161,16 @@ void checkBatteryVoltage() {
     checkBatteryVoltage_batteryVoltage = checkBatteryVoltage_calc / (R2/(R1+R2));
     Serial.println(checkBatteryVoltage_batteryVoltage);
   }
+
+  if (checkBatteryVoltage_batteryVoltage < 12.3)
+  {
+    lowBatteryIdle();
+  }
+}
+
+void lowBatteryIdle() {
+  while(checkBatteryVoltage_batteryVoltage < 12.3) {
+    delay(3600000);
+    checkBatteryVoltage();
+  }
 }
