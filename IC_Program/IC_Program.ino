@@ -8,6 +8,9 @@ String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
 
+const long checkBatteryVoltage_interval = 60000;
+unsigned long checkBatteryVoltage_lastMillis;
+
 float calc = 0.00;
 float voltageBattery = 0.00;
 float R1 = 102000.00;
@@ -82,15 +85,7 @@ void loop() {
     BTSerial.write(carLock("state"));
   }
   
-  
-  if (i > 25000)
-  {
-    i = 0;
-    Serial.println("Sending battery voltage");
-    BTSerial.print(batteryVoltage());
-    BTSerial.println("V");
-  }
-  i++;
+  checkBatteryVoltage();
 }
 
 
@@ -149,10 +144,16 @@ char* carLock(String action) {
   }
 }
 
-float batteryVoltage() {
-  val = analogRead(batteryVoltagePin);
-  calc = (val * 5.05) / 1024.00;
-  voltageBattery = calc / (R2/(R1+R2));
-  Serial.println(voltageBattery);
-  return voltageBattery;
+void checkBatteryVoltage() {
+  unsigned long checkBatteryVoltage_currentMillis = millis();
+
+  if (checkBatteryVoltage_currentMillis - checkBatteryVoltage_lastMillis >= checkBatteryVoltage_interval)
+  {
+    checkBatteryVoltage_lastMillis = checkBatteryVoltage_currentMillis;
+
+    checkBatteryVoltage_val = analogRead(batteryVoltagePin);
+    checkBatteryVoltage_calc = (checkBatteryVoltage_val * 5.05) / 1024.00;
+    checkBatteryVoltage_batteryVoltage = checkBatteryVoltage_calc / (R2/(R1+R2));
+    Serial.println(checkBatteryVoltage_batteryVoltage);
+  }
 }
