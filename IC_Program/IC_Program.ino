@@ -147,6 +147,11 @@ char* carLock(String action) {
 void checkBatteryVoltage() {
   unsigned long checkBatteryVoltage_currentMillis = millis();
 
+  if (checkBatteryVoltage_lastMillis > checkBatteryVoltage_currentMillis)
+  {
+    checkBatteryVoltage_lastMillis = checkBatteryVoltage_currentMillis;
+  }
+
   if (checkBatteryVoltage_currentMillis - checkBatteryVoltage_lastMillis >= checkBatteryVoltage_interval)
   {
     checkBatteryVoltage_lastMillis = checkBatteryVoltage_currentMillis;
