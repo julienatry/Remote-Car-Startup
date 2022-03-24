@@ -2,7 +2,7 @@
 #include <SoftwareSerial.h>
 
 int batteryVoltagePin = A5, val = 0;
-int accessoriesPin = 8, ignitionPin = 9, starterPin = 10, engineState = ;
+int accessoriesPin = 8, ignitionPin = 9, starterPin = 10, engineState = 6;
 int angelEyesPin = 11, lockPin = 12, unlockPin = 13;
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
