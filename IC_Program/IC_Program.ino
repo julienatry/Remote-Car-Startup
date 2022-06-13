@@ -8,8 +8,8 @@
 #define angelEyesPin 11
 #define lockPin 12
 #define unlockPin 13
+//#define pwn_in 
 
-int val = 0;
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
