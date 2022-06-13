@@ -10,10 +10,12 @@
 #define unlockPin 13
 //#define pwn_in 
 
+// Global variables
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
 
+// Battery check variables
 const long checkBatteryVoltage_interval = 60000;
 unsigned long checkBatteryVoltage_lastMillis;
 
@@ -22,7 +24,9 @@ float voltageBattery = 0.00;
 float R1 = 102000.00;
 float R2 = 9999.00;
 
-int i = 0;
+// PWM reader variables
+
+
 
 SoftwareSerial BTSerial(2, 3);
 
