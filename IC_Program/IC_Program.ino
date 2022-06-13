@@ -192,5 +192,43 @@ void lowBatteryIdle() {
 
 
 void pwmStart() {
-  pwmStartTime
+  pwmStartTime = micros();
+
+  attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStop, RISING);
+}
+
+void pwmStop() {
+  pwmStopTime = micros();
+
+  pwmPeriod = pwmStopTime - pwmStartTime;
+  Serial.print("Period : ");
+  Serial.println(pwmPeriodSmooth());
+
+  pwmFreq = 1.0 / pwmPeriodSmooth() * 1000000.0;
+  Serial.print("Frequency : ");
+  Serial.println(pwmFreq);
+
+  pwmRpm = pwmFreq * 26;
+  Serial.print("RPM : ");
+  Serial.println(pwmRpm);
+
+  attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
+}
+
+float pwmPeriodSmooth() {
+  float pwmSmoothAverage;
+
+  pwmTotal = pwmTotal - pwmPeriods[pwmReadIndex];
+  pwmPeriods[pwmReadIndex] = pwmPeriod;
+  pwmTotal = pwmTotal + pwmPeriods[pwmReadIndex];
+
+  pwmReadIndex++;
+  if (pwmReadIndex >= pwmNumPeriods)
+  {
+    pwmReadIndex = 0;
+  }
+
+  pwmSmoothAverage = pwmTotal / pwmNumPeriods;
+
+  return pwmSmoothAverage;
 }
