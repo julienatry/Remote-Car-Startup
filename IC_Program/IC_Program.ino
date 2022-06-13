@@ -43,7 +43,6 @@ void setup() {
   pinMode(lockPin, OUTPUT);
   pinMode(unlockPin, OUTPUT);
   pinMode(batteryVoltagePin, INPUT);
-  pinMode(engineState, INPUT);
 
   Serial.begin(9600);
   BTSerial.begin(9600);
@@ -129,10 +128,7 @@ void startEngine() {
   digitalWrite(ignitionPin, HIGH);
   delay(10000);
   digitalWrite(starterPin, HIGH);
-  while(digitalRead(engineState) == LOW)
-  {
-	  delay(250);
-  }
+  delay(5000);
   digitalWrite(starterPin, LOW);
 }
 
