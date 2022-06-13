@@ -1,9 +1,15 @@
 #include <stdlib.h>
 #include <SoftwareSerial.h>
 
-int batteryVoltagePin = A5, val = 0;
-int accessoriesPin = 8, ignitionPin = 9, starterPin = 10, engineState = 6;
-int angelEyesPin = 11, lockPin = 12, unlockPin = 13;
+#define batteryVoltagePin A5
+#define accessoriesPin 8
+#define ignitionPin 9
+#define starterPin 10
+#define angelEyesPin 11
+#define lockPin 12
+#define unlockPin 13
+
+int val = 0;
 String receivedData;
 char* angelEyesState = "500", lockState = "600";
 char currentChar;
