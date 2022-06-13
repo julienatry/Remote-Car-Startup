@@ -8,7 +8,7 @@
 #define angelEyesPin 11
 #define lockPin 12
 #define unlockPin 13
-//#define pwn_in 
+//#define pwnPin 
 
 // Global variables
 String receivedData;
@@ -25,12 +25,12 @@ float R1 = 102000.00;
 float R2 = 9999.00;
 
 // PWM reader variables
-float pwm_freq, pwm_period, pwm_rpm;
-unsigned long pwm_start_time, pwm_stop_time;
-const int pwm_num_periods = 25;
-int pwm_periods [pwm_num_periods];
-int pwm_read_index;
-float pwm_total;
+float pwmFreq, pwmPeriod, pwmRpm;
+unsigned long pwmStartTime, pwmStopTime;
+const int pwmNumPeriods = 25;
+int pwmPeriods [pwmNumPeriods];
+int pwmReadIndex;
+float pwmTotal;
 
 // Serial port (RX/TX) for bluetooth adapter
 SoftwareSerial BTSerial(2, 3);
@@ -43,6 +43,7 @@ void setup() {
   pinMode(lockPin, OUTPUT);
   pinMode(unlockPin, OUTPUT);
   pinMode(batteryVoltagePin, INPUT);
+  //pinMode(pwmPin, INPUT);
 
   Serial.begin(9600);
   BTSerial.begin(9600);
@@ -155,6 +156,8 @@ char* carLock(String action) {
   }
 }
 
+
+
 void checkBatteryVoltage() {
   unsigned long checkBatteryVoltage_currentMillis = millis();
 
@@ -184,4 +187,10 @@ void lowBatteryIdle() {
     delay(3600000);
     checkBatteryVoltage();
   }
+}
+
+
+
+void pwmStart() {
+  pwmStartTime
 }
