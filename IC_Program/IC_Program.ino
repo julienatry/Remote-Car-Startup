@@ -25,9 +25,14 @@ float R1 = 102000.00;
 float R2 = 9999.00;
 
 // PWM reader variables
+float pwm_freq, pwm_period, pwm_rpm;
+unsigned long pwm_start_time, pwm_stop_time;
+const int pwm_num_periods = 25;
+int pwm_periods [pwm_num_periods];
+int pwm_read_index;
+float pwm_total;
 
-
-
+// Serial port (RX/TX) for bluetooth adapter
 SoftwareSerial BTSerial(2, 3);
 
 void setup() {
