@@ -49,6 +49,7 @@ void loop() {
     currentChar = BTSerial.read();
     receivedData = receivedData + currentChar;
 
+    // Detect message's end
     if (currentChar == '\n')
     {
       receivedData = receivedData.substring(0, receivedData.length() - 1);
@@ -121,9 +122,9 @@ char* angelEyes(String action) {
 void startEngine() {
   digitalWrite(accessoriesPin, HIGH);
   digitalWrite(ignitionPin, HIGH);
-  delay(10000);
+  delay(10000); // Delay after turning ignition ON, so the ECU can initialize properly
   digitalWrite(starterPin, HIGH);
-  //attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
+  //attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING); //Used to detect if starter is still needed
   digitalWrite(starterPin, LOW);
 }
 
