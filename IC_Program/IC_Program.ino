@@ -16,13 +16,9 @@ char* angelEyesState = "500", lockState = "600";
 char currentChar;
 
 // Battery check variables
-const long checkBatteryVoltage_interval = 60000;
+const long checkBatteryVoltage_interval = 60000; // 60 sec
 unsigned long checkBatteryVoltage_lastMillis;
-
-float calc = 0.00;
-float voltageBattery = 0.00;
-float R1 = 102000.00;
-float R2 = 9999.00;
+float calc = 0.00, voltageBattery = 0.00, R1 = 102000.00, R2 = 9999.00; // R1 and R2 are values of the 2 resistors from the voltage divider
 
 // PWM reader variables
 float pwmFreq, pwmPeriod, pwmRpm;
