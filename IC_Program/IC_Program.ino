@@ -129,7 +129,7 @@ void startEngine() {
   digitalWrite(ignitionPin, HIGH);
   delay(10000);
   digitalWrite(starterPin, HIGH);
-  attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
+  //attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
   digitalWrite(starterPin, LOW);
 }
 
@@ -212,7 +212,7 @@ void pwmStop() {
   Serial.print("RPM : ");
   Serial.println(pwmRpm);
 
-  attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
+  //attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
 }
 
 float pwmPeriodSmooth() {
