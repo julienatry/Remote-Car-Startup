@@ -167,7 +167,7 @@ void checkBatteryVoltage() {
     checkBatteryVoltage_lastMillis = checkBatteryVoltage_currentMillis;
 
     checkBatteryVoltage_val = analogRead(batteryVoltagePin);
-    checkBatteryVoltage_calc = (checkBatteryVoltage_val * 5.05) / 1024.00;
+    checkBatteryVoltage_calc = (checkBatteryVoltage_val * 5.05) / 1023.00; // 5V is the IC's input voltage and 1023 is the max value the analogRead can return (1024 values including 0)
     checkBatteryVoltage_batteryVoltage = checkBatteryVoltage_calc / (R2/(R1+R2));
     Serial.println(checkBatteryVoltage_batteryVoltage);
   }
