@@ -21,12 +21,10 @@ unsigned long checkBatteryVoltage_lastMillis;
 float calc = 0.00, voltageBattery = 0.00, R1 = 102000.00, R2 = 9999.00; // R1 and R2 are values of the 2 resistors from the voltage divider
 
 // PWM reader variables
-float pwmFreq, pwmPeriod, pwmRpm;
+float pwmFreq, pwmPeriod, pwmRpm, pwmTotal;
 unsigned long pwmStartTime, pwmStopTime;
-const int pwmNumPeriods = 25;
-int pwmPeriods [pwmNumPeriods];
-int pwmReadIndex;
-float pwmTotal;
+const int pwmNumPeriods = 25; // Number of PWM periods used to smooth final output
+int pwmReadIndex, pwmPeriods [pwmNumPeriods];
 
 // Serial port (RX/TX) for bluetooth adapter
 SoftwareSerial BTSerial(2, 3);
