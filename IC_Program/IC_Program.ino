@@ -8,7 +8,7 @@
 #define angelEyesPin 11
 #define lockPin 12
 #define unlockPin 13
-//#define pwnPin 
+//#define isEngineRunningPin 
 
 // Global variables
 String receivedData;
@@ -19,12 +19,6 @@ char currentChar;
 const long checkBatteryVoltage_interval = 60000; // 60 sec
 unsigned long checkBatteryVoltage_lastMillis;
 float calc = 0.00, voltageBattery = 0.00, R1 = 102000.00, R2 = 9999.00; // R1 and R2 are values of the 2 resistors from the voltage divider
-
-// PWM reader variables
-float pwmFreq, pwmPeriod, pwmRpm, pwmTotal;
-unsigned long pwmStartTime, pwmStopTime;
-const int pwmNumPeriods = 25; // Number of PWM periods used to smooth final output
-int pwmReadIndex, pwmPeriods [pwmNumPeriods];
 
 // Serial port (RX/TX) for bluetooth adapter
 SoftwareSerial BTSerial(2, 3);
@@ -37,7 +31,7 @@ void setup() {
   pinMode(lockPin, OUTPUT);
   pinMode(unlockPin, OUTPUT);
   pinMode(batteryVoltagePin, INPUT);
-  //pinMode(pwmPin, INPUT);
+  //pinMode(isEngineRunningPin, INPUT);
 
   Serial.begin(9600);
   BTSerial.begin(9600);
@@ -122,9 +116,16 @@ char* angelEyes(String action) {
 void startEngine() {
   digitalWrite(accessoriesPin, HIGH);
   digitalWrite(ignitionPin, HIGH);
-  delay(10000); // Delay after turning ignition ON, so the ECU can initialize properly
+
+  // Delay after turning ignition ON, so the ECU can initialize properly
+  delay(10000); // 10 sec
+
   digitalWrite(starterPin, HIGH);
-  //attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING); //Used to detect if starter is still needed
+
+  //Used to detect if starter is still needed
+  while (digitalRead(isEngineRunningPin) == LOW) {
+    delay(200); // 200 ms
+  }
   digitalWrite(starterPin, LOW);
 }
 
@@ -179,51 +180,7 @@ void checkBatteryVoltage() {
 
 void lowBatteryIdle() {
   while(checkBatteryVoltage_batteryVoltage < 12.3) {
-    delay(3600000);
+    delay(3600000); // 1 hour
     checkBatteryVoltage();
   }
-}
-
-
-
-void pwmStart() {
-  pwmStartTime = micros();
-
-  attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStop, RISING);
-}
-
-void pwmStop() {
-  pwmStopTime = micros();
-
-  pwmPeriod = pwmStopTime - pwmStartTime;
-  Serial.print("Period : ");
-  Serial.println(pwmPeriodSmooth());
-
-  pwmFreq = 1.0 / pwmPeriodSmooth() * 1000000.0;
-  Serial.print("Frequency : ");
-  Serial.println(pwmFreq);
-
-  pwmRpm = pwmFreq * 26;
-  Serial.print("RPM : ");
-  Serial.println(pwmRpm);
-
-  //attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
-}
-
-float pwmPeriodSmooth() {
-  float pwmSmoothAverage;
-
-  pwmTotal = pwmTotal - pwmPeriods[pwmReadIndex];
-  pwmPeriods[pwmReadIndex] = pwmPeriod;
-  pwmTotal = pwmTotal + pwmPeriods[pwmReadIndex];
-
-  pwmReadIndex++;
-  if (pwmReadIndex >= pwmNumPeriods)
-  {
-    pwmReadIndex = 0;
-  }
-
-  pwmSmoothAverage = pwmTotal / pwmNumPeriods;
-
-  return pwmSmoothAverage;
 }
