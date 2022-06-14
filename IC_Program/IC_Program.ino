@@ -129,7 +129,7 @@ void startEngine() {
   digitalWrite(ignitionPin, HIGH);
   delay(10000);
   digitalWrite(starterPin, HIGH);
-  delay(5000);
+  attachInterrupt(digitalPinToInterrupt(pwmPin), pwmStart, RISING);
   digitalWrite(starterPin, LOW);
 }
 
