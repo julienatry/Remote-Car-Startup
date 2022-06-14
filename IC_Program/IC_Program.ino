@@ -2,13 +2,13 @@
 #include <SoftwareSerial.h>
 
 #define batteryVoltagePin A5
+#define isEngineRunningPin 6
 #define accessoriesPin 8
 #define ignitionPin 9
 #define starterPin 10
 #define angelEyesPin 11
 #define lockPin 12
 #define unlockPin 13
-//#define isEngineRunningPin 
 
 // Global variables
 String receivedData;
@@ -31,7 +31,7 @@ void setup() {
   pinMode(lockPin, OUTPUT);
   pinMode(unlockPin, OUTPUT);
   pinMode(batteryVoltagePin, INPUT);
-  //pinMode(isEngineRunningPin, INPUT);
+  pinMode(isEngineRunningPin, INPUT);
 
   Serial.begin(9600);
   BTSerial.begin(9600);
