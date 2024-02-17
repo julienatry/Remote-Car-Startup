@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <SoftwareSerial.h>
 
-#define batteryVoltagePin A5
+//#define batteryVoltagePin A5
 #define isEngineRunningPin 6
 #define accessoriesPin 8
 #define ignitionPin 9
@@ -9,16 +9,13 @@
 #define angelEyesPin 11
 #define lockPin 12
 #define unlockPin 13
+#define exhaustValveONPin 14
+#define exhaustValveOFFPin 15
 
 // Global variables
 String receivedData;
-char* angelEyesState = "500", lockState = "600";
+char* angelEyesState = "500", lockState = "600", exhaustValveState = "700";
 char currentChar;
-
-// Battery check variables
-const long checkBatteryVoltage_interval = 60000; // 60 sec
-unsigned long checkBatteryVoltage_lastMillis;
-float calc = 0.00, voltageBattery = 0.00, R1 = 102000.00, R2 = 9999.00; // R1 and R2 are values of the 2 resistors from the voltage divider
 
 // Serial port (RX/TX) for bluetooth adapter
 SoftwareSerial BTSerial(2, 3);
@@ -30,7 +27,9 @@ void setup() {
   pinMode(angelEyesPin, OUTPUT);
   pinMode(lockPin, OUTPUT);
   pinMode(unlockPin, OUTPUT);
-  pinMode(batteryVoltagePin, INPUT);
+  pinMode(exhaustValveONPin, OUTPUT);
+  pinMode(exhaustValveOFFPin, OUTPUT);
+  //pinMode(batteryVoltagePin, INPUT);
   pinMode(isEngineRunningPin, INPUT);
 
   Serial.begin(9600);
@@ -87,9 +86,19 @@ void loop() {
   {
     Serial.println("Sending Car Lock State");
     BTSerial.write(carLock("state"));
+  }else if (receivedData == "ExhaustOpen")
+  {
+    Serial.println("Opening exhaust valve");
+    exhaustValve("ON");
+  }else if (receivedData == "ExhaustClose")
+  {
+    Serial.println("Closing exhaust valve");
+    exhaustValve("OFF");
+  }else if (receivedData == "ExhaustState")
+  {
+    Serial.println("Sending Exhaust Valve State");
+    BTSerial.write(exhaustValve("state"));
   }
-  
-  checkBatteryVoltage();
 }
 
 
@@ -154,33 +163,19 @@ char* carLock(String action) {
 
 
 
-void checkBatteryVoltage() {
-  unsigned long checkBatteryVoltage_currentMillis = millis();
-
-  if (checkBatteryVoltage_lastMillis > checkBatteryVoltage_currentMillis)
+char* exhaustValve(String action) {
+  if (action == "state")
   {
-    checkBatteryVoltage_lastMillis = checkBatteryVoltage_currentMillis;
-  }
-
-  if (checkBatteryVoltage_currentMillis - checkBatteryVoltage_lastMillis >= checkBatteryVoltage_interval)
+    return exhaustValveState;
+  }else if (action == "ON")
   {
-    checkBatteryVoltage_lastMillis = checkBatteryVoltage_currentMillis;
-
-    checkBatteryVoltage_val = analogRead(batteryVoltagePin);
-    checkBatteryVoltage_calc = (checkBatteryVoltage_val * 5.05) / 1023.00; // 5V is the IC's input voltage and 1023 is the max value the analogRead can return (1024 values including 0)
-    checkBatteryVoltage_batteryVoltage = checkBatteryVoltage_calc / (R2/(R1+R2));
-    Serial.println(checkBatteryVoltage_batteryVoltage);
-  }
-
-  if (checkBatteryVoltage_batteryVoltage < 12.3)
+    digitalWrite(exhaustValveONPin, HIGH);
+    exhaustValveState = "701";
+  }else if (action == "OFF")
   {
-    lowBatteryIdle();
-  }
-}
-
-void lowBatteryIdle() {
-  while(checkBatteryVoltage_batteryVoltage < 12.3) {
-    delay(3600000); // 1 hour
-    checkBatteryVoltage();
+    digitalWrite(exhaustValveOFFPin, LOW);
+    exhaustValveState = "700";
+  }else{
+    Serial.println("exhaustValve : string error");
   }
 }
