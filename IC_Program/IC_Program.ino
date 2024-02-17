@@ -13,7 +13,7 @@
 #define exhaustValveOFFPin 15
 
 // Global variables
-String receivedData;
+String receivedBuffer, receivedData;
 char* angelEyesState = "500", lockState = "600", exhaustValveState = "700";
 char currentChar;
 
@@ -40,14 +40,14 @@ void loop() {
   if (BTSerial.available())
   {
     currentChar = BTSerial.read();
-    receivedData = receivedData + currentChar;
+    receivedBuffer = receivedBuffer + currentChar;
 
     // Detect message's end
     if (currentChar == '\n')
     {
-      receivedData = receivedData.substring(0, receivedData.length() - 1);
+      receivedData = receivedBuffer.substring(0, receivedData.length() - 1);
       Serial.println(receivedData);
-      receivedData = "";
+      receivedBuffer = "";
     }
   }
 
@@ -169,11 +169,13 @@ char* exhaustValve(String action) {
     return exhaustValveState;
   }else if (action == "ON")
   {
+    digitalWrite(exhaustValveOFFPin, LOW);
     digitalWrite(exhaustValveONPin, HIGH);
     exhaustValveState = "701";
   }else if (action == "OFF")
   {
-    digitalWrite(exhaustValveOFFPin, LOW);
+    digitalWrite(exhaustValveONPin, LOW);
+    digitalWrite(exhaustValveOFFPin, HIGH);
     exhaustValveState = "700";
   }else{
     Serial.println("exhaustValve : string error");
