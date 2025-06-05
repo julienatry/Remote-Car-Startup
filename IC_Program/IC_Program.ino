@@ -9,8 +9,6 @@
 //#define relay1 11
 //#define relay2 12
 //#define relay3 13
-//#define relay4 14
-//#define relay5 15
 
 // Global variables
 String receivedBuffer, receivedData;
@@ -26,8 +24,6 @@ void setup() {
   //pinMode(relay1, OUTPUT);
   //pinMode(relay2, OUTPUT);
   //pinMode(relay3, OUTPUT);
-  //pinMode(relay4, OUTPUT);
-  //pinMode(relay5, OUTPUT);
   //pinMode(batteryVoltagePin, INPUT);
 
   Serial.begin(9600);
