@@ -48,12 +48,11 @@ void loop() {
   if (receivedData == "StartupSequence")
   {
     Serial.println("Starting vehicle");
-    carLock("unlock");
     delay(2000);
     startEngine();
   }else if (receivedData == "EngineOff")
   {
-    Serial.println("Stoping Engine");
+    Serial.println("Stopping Engine");
     digitalWrite(ignitionPin, LOW);
     digitalWrite(accessoriesPin, LOW);
   }
@@ -71,8 +70,9 @@ void startEngine() {
   digitalWrite(starterPin, HIGH);
 
   //Used to detect if starter is still needed
-  while (digitalRead(isEngineRunningPin) == LOW) {
+  /*while (digitalRead(isEngineRunningPin) == LOW) {
     delay(200); // 200 ms
-  }
+  }*/
+  delay(5000);
   digitalWrite(starterPin, LOW);
 }
