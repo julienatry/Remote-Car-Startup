@@ -3,7 +3,7 @@
 
 //#define batteryVoltagePin A5
 //#define isEngineRunningPin 6
-#define accessoriesPin 8
+//#define accessoriesPin 8
 #define ignitionPin 9
 #define starterPin 10
 //#define relay1 11
@@ -17,7 +17,7 @@ String receivedData;
 SoftwareSerial BTSerial(2, 3);
 
 void setup() {
-  pinMode(accessoriesPin, OUTPUT);
+  //pinMode(accessoriesPin, OUTPUT);
   pinMode(ignitionPin, OUTPUT);
   pinMode(starterPin, OUTPUT);
   //pinMode(relay1, OUTPUT);
@@ -46,7 +46,7 @@ void loop() {
   {
     Serial.println("Stopping Engine");
     digitalWrite(ignitionPin, LOW);
-    digitalWrite(accessoriesPin, LOW);
+    //digitalWrite(accessoriesPin, LOW);
   }
   receivedData = "";
 }
@@ -54,7 +54,7 @@ void loop() {
 
 
 void startEngine() {
-  digitalWrite(accessoriesPin, HIGH);
+  //digitalWrite(accessoriesPin, HIGH);
   digitalWrite(ignitionPin, HIGH);
 
   // Delay after turning ignition ON, so the ECU can initialize properly
