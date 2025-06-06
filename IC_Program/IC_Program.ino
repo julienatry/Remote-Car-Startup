@@ -48,6 +48,7 @@ void loop() {
     digitalWrite(ignitionPin, LOW);
     digitalWrite(accessoriesPin, LOW);
   }
+  receivedData = "";
 }
 
 
