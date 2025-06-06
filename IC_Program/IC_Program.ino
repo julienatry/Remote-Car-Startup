@@ -11,8 +11,7 @@
 //#define relay3 13
 
 // Global variables
-String receivedBuffer, receivedData;
-char currentChar;
+String receivedData;
 
 // Serial port (RX/TX) for bluetooth adapter
 SoftwareSerial BTSerial(2, 3);
@@ -33,16 +32,9 @@ void setup() {
 void loop() {
   if (BTSerial.available())
   {
-    currentChar = BTSerial.read();
-    receivedBuffer = receivedBuffer + currentChar;
-
-    // Detect message's end
-    if (currentChar == '\n')
-    {
-      receivedData = receivedBuffer.substring(0, receivedData.length() - 1);
-      Serial.println(receivedData);
-      receivedBuffer = "";
-    }
+    receivedData = BTSerial.readStringUntil('\n'); // Or read byte by byte
+    Serial.print("Received: ");
+    Serial.println(receivedData);
   }
 
   if (receivedData == "StartupSequence")
