@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <SoftwareSerial.h>
 
-//#define batteryVoltagePin A5
+#define batteryVoltagePin A5
 //#define isEngineRunningPin 6
 #define accessoriesPin 8
 #define ignitionPin 9
@@ -17,6 +17,9 @@ int ignitionState = 0;
 int starterState = 0;
 int boostMode = 0;
 
+// Battery check variables
+float batteryVoltage_val, batteryVoltage_calc, batteryVoltage_vol, R1 = 103500.00, R2 = 10000.00; // R1 and R2 are values of the 2 resistors from the voltage divider
+
 // Serial port (RX/TX) for bluetooth adapter
 SoftwareSerial BTSerial(2, 3);
 
@@ -30,7 +33,7 @@ void setup() {
   //pinMode(relay1, OUTPUT);
   //pinMode(relay2, OUTPUT);
   //pinMode(relay3, OUTPUT);
-  //pinMode(batteryVoltagePin, INPUT);
+  pinMode(batteryVoltagePin, INPUT);
 
   Serial.println("RemoteCarStartup Ready");
 }
@@ -104,6 +107,13 @@ void loop() {
     BTSerial.println(ignitionState);
     BTSerial.print("StarterState ");
     BTSerial.println(starterState);
+  }else if (receivedData == "BatteryVoltage")
+  {
+    batteryVoltage_val = analogRead(batteryVoltagePin);
+    batteryVoltage_calc = (batteryVoltage_val * 5.00) / 1023.00;
+    batteryVoltage_vol = batteryVoltage_calc / (R2/(R1+R2));
+    BTSerial.print("Battery ");
+    BTSerial.println(batteryVoltage_vol);
   }
   receivedData = "";
 }
