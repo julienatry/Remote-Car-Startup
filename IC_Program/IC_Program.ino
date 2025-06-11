@@ -4,11 +4,11 @@
 #define batteryVoltagePin A5
 //#define isEngineRunningPin 6
 #define accessoriesPin 8
-#define ignitionPin 9
-#define starterPin 10
-//#define relay1 11
-//#define relay2 12
-//#define relay3 13
+#define accessoriesPin2 9
+#define ignitionPin 10
+#define ignitionPin2 11
+#define starterPin 12
+#define starterPin2 13
 
 // Global variables
 String receivedData;
@@ -28,11 +28,11 @@ void setup() {
   BTSerial.begin(9600);
   
   pinMode(accessoriesPin, OUTPUT);
+  pinMode(accessoriesPin2, OUTPUT);
   pinMode(ignitionPin, OUTPUT);
+  pinMode(ignitionPin2, OUTPUT);
   pinMode(starterPin, OUTPUT);
-  //pinMode(relay1, OUTPUT);
-  //pinMode(relay2, OUTPUT);
-  //pinMode(relay3, OUTPUT);
+  pinMode(starterPin2, OUTPUT);
   pinMode(batteryVoltagePin, INPUT);
 
   Serial.println("RemoteCarStartup Ready");
@@ -55,8 +55,10 @@ void loop() {
   {
     Serial.println("Stopping Engine");
     digitalWrite(ignitionPin, LOW);
+    digitalWrite(ignitionPin2, LOW);
     ignitionState = 0;
     digitalWrite(accessoriesPin, LOW);
+    digitalWrite(accessoriesPin2, LOW);
     accessoriesState = 0;
   }else if (receivedData == "LowBoost")
   {
@@ -71,31 +73,37 @@ void loop() {
     Serial.println("Accessories OFF");
     accessoriesState = 0;
     digitalWrite(accessoriesPin, LOW);
+    digitalWrite(accessoriesPin2, LOW);
   }else if (receivedData == "AccessoriesON")
   {
     Serial.println("Accessories ON");
     accessoriesState = 1;
     digitalWrite(accessoriesPin, HIGH);
+    digitalWrite(accessoriesPin2, HIGH);
   }else if (receivedData == "IgnitionOFF")
   {
     Serial.println("Ignition OFF");
     ignitionState = 0;
     digitalWrite(ignitionPin, LOW);
+    digitalWrite(ignitionPin2, LOW);
   }else if (receivedData == "IgnitionON")
   {
     Serial.println("Ignition ON");
     ignitionState = 1;
     digitalWrite(ignitionPin, HIGH);
+    digitalWrite(ignitionPin2, HIGH);
   }else if (receivedData == "StarterOFF")
   {
     Serial.println("Starter OFF");
     starterState = 0;
     digitalWrite(starterPin, LOW);
+    digitalWrite(starterPin2, LOW);
   }else if (receivedData == "StarterON")
   {
     Serial.println("Starter ON");
     starterState = 1;
     digitalWrite(starterPin, HIGH);
+    digitalWrite(starterPin2, HIGH);
   }else if (receivedData == "Connected")
   {
     Serial.println("Connected to new device");
@@ -122,14 +130,17 @@ void loop() {
 
 void startEngine() {
   digitalWrite(accessoriesPin, HIGH);
+  digitalWrite(accessoriesPin2, HIGH);
   accessoriesState = 1;
   digitalWrite(ignitionPin, HIGH);
+  digitalWrite(ignitionPin2, HIGH);
   ignitionState = 1;
 
   // Delay after turning ignition ON, so the ECU can initialize properly
   delay(10000); // 10 sec
 
   digitalWrite(starterPin, HIGH);
+  digitalWrite(starterPin2, HIGH);
   starterState = 1;
 
   //Used to detect if starter is still needed
@@ -138,5 +149,6 @@ void startEngine() {
   }*/
   delay(5000);
   digitalWrite(starterPin, LOW);
+  digitalWrite(starterPin2, LOW);
   starterState = 0;
 }
