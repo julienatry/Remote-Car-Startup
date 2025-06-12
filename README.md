@@ -11,10 +11,6 @@ Make your car start by pressing a button on your phone
 - Diode (IN4007)
 - 16MHz Quartz Crystal
 
-# WIP
-- IC Program
-- Car integration
 
 # Todo list
-- Wiring to BMW's ZKE / Stock harness
 - Signal from the ECU when engine started up
