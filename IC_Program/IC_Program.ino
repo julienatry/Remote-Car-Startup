@@ -98,37 +98,12 @@ void loop() {
     starterState = 0;
     digitalWrite(starterPin, LOW);
     digitalWrite(starterPin2, LOW);
-  }else if (receivedData.startsWith("StarterON"))
+  }else if (receivedData == "StarterON")
   {
-    int spaceIndex = receivedData.indexOf(' ');
-    int starterDuration = 5;
-
-    if (spaceIndex != -1) {
-      String durationString = receivedData.substring(spaceIndex + 1);
-      int parsedDuration = durationString.toInt();
-      if (parsedDuration > 0 && parsedDuration <= 10) {
-        starterDuration = parsedDuration;
-      }
-    }
-    
-    Serial.print("Starter ON for ");
-    Serial.print(starterDuration);
-    Serial.println(" seconds");
-    
+    Serial.println("Starter ON");
     starterState = 1;
     digitalWrite(starterPin, HIGH);
     digitalWrite(starterPin2, HIGH);
-    BTSerial.print("StarterState ");
-    BTSerial.println(starterState);
-
-    delay(starterDuration * 1000);
-
-    digitalWrite(starterPin, LOW);
-    digitalWrite(starterPin2, LOW);
-    starterState = 0;
-    Serial.println("Starter OFF");
-    BTSerial.print("StarterState ");
-    BTSerial.println(starterState);
   }else if (receivedData == "Connected")
   {
     Serial.println("Connected to new device");
@@ -153,7 +128,7 @@ void loop() {
 
 
 
-void startEngine() {
+void startEngine() {   
   digitalWrite(accessoriesPin, HIGH);
   digitalWrite(accessoriesPin2, HIGH);
   accessoriesState = 1;
@@ -162,7 +137,7 @@ void startEngine() {
   ignitionState = 1;
 
   // Delay after turning ignition ON, so the ECU can initialize properly
-  /*delay(10000); // 10 sec
+  delay(10000); // 10 sec
 
   digitalWrite(starterPin, HIGH);
   digitalWrite(starterPin2, HIGH);
@@ -171,9 +146,9 @@ void startEngine() {
   //Used to detect if starter is still needed
   /*while (digitalRead(isEngineRunningPin) == LOW) {
     delay(200); // 200 ms
-  }
+  }*/
   delay(5000);
   digitalWrite(starterPin, LOW);
   digitalWrite(starterPin2, LOW);
-  starterState = 0;*/
+  starterState = 0;
 }
